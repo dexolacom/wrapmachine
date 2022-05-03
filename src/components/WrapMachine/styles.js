@@ -30,7 +30,6 @@ export const InputWrapper = styled.div`
   box-shadow: inset 4px 4px 7px #d19b0b,
     inset -4px -4px 7px #ffd10f;
   margin-bottom: 1em;
-  color: blu
 `
 
 export const InputContainer = styled.div`
@@ -136,7 +135,9 @@ export const AccentText = styled.span`
 export const Button = styled.button`
   font-size: 1em;
   font-weight: 600;
-  background-color: #ffd10f;
+  background: #f6b60d;
+  box-shadow:  6px 6px 12px #d19b0b,
+    -6px -6px 12px #ffd10f;
   padding: 1em 4em 1em 4em;
   margin: 0 auto;
   outline: none;
@@ -145,6 +146,6 @@ export const Button = styled.button`
   border: 1px solid transparent;
   
   &:hover {
-    border: 1px solid coral;
+    background-color: #ffd10f;
   }
 `

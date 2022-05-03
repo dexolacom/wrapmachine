@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ethersproject/providers": "^5.6.5",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -13,7 +14,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.3.1",
     "styled-components": "^5.3.5",
-    "tech-mask-utils": "^1.1.9",
+    "tech-web3-connector": "^1.2.8",
     "web-vitals": "^2.1.0",
     "web3": "^1.7.3",
     "web3-react": "^5.0.5"
