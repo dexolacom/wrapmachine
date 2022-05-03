@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 // import ABI from './ABI_DEFAULT.json'
 import {useWeb3React} from '@web3-react/core';
 import Web3 from 'web3';
-import ABI from './abi.json'
+import ABI from './abis/abi.json'
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 

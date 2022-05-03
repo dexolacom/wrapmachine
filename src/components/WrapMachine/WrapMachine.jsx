@@ -16,12 +16,11 @@ import {
   Button,
   AccentText
 } from './styles'
-import HashLink from '../HashLink/HashLink'
 import { normalizeEth, getWrapContract } from '../../constants/utils'
-import ABI from '../../constants/erc20_abi.json'
-import wrapAbi from '../../constants/wrapAbi.json'
-import wrapAbiBSC from '../../constants/wrapAbiBSC.json'
-// import { useWeb3Contract } from 'context/contexts'
+import ABI from '../../constants/abis/erc20_abi.json'
+import wrapAbi from '../../constants/abis/wrapAbi.json'
+import wrapAbiBSC from '../../constants/abis/wrapAbiBSC.json'
+import {contractsAddressesBSC, contractsAddressesETH} from '../../constants/addresses';
 // import Loader from '../Loader'
 
 const tokenList = [
@@ -47,9 +46,6 @@ const Wrap = () => {
   const [isLiquidity, setIsLiquidity] = useState(true)
   const [minAmount, setMinAmount] = useState(0)
 
-
-  // const timeout = 0
-  // const { getContract } = useWeb3Contract()
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -87,46 +83,24 @@ const Wrap = () => {
   const wrapContract = getWrapContract(chainId)
   const wrapDomen = chainId === 1 || chainId === 56 ? 'swap' : 'demoswap'
 
-  const contractsBSC  = {
-    nbu: '0x5f20559235479F5B6abb40dFC6f55185b74E7b55',
-    gnbu: '0xA4d872235dde5694AF92a1d0df20d723E8e9E5fC',
-    router: '0x2C6cF65f3cD32a9Be1822855AbF2321F6F8f6b24',
-    // routerTest: '',
-    wrapNBU: '0xBFe52A0DBF40183bc5fC3220Dab2Db64BF19368E',
-    wrapGNBU: '0xCaD011b3B79a3a83C576E6b2682049e296bE9374',
-    initialSale: '0xb99f831a0a17ecD4221c907714B44A1931446832',
-    wrapNBUTest: '0xD25969cf1c1930e4EB5b13007B09A5CFd02c16c8',
-    wrapGNBUTest: '0xEe9628E882ee2929DF2de2c8Ca06b70aC9c211Aa'
-  }
 
-  const contractsETH = {
-    nbu: '0xEB58343b36C7528F23CAAe63a150240241310049',
-    gnbu: '0x639ae8F3EEd18690bF451229d14953a5A5627b72',
-    router: '0x05F6BB6b96ca657a3666d2f1bCA302b999a671b4',
-    wrapNBU: '0xBFe52A0DBF40183bc5fC3220Dab2Db64BF19368E',
-    wrapGNBU: '0xCaD011b3B79a3a83C576E6b2682049e296bE9374',
-    initialSale: '0xEEA92913d8AA554a102ED5B4F0A6206E6D8d59D5',
-    wrapNBUTest: '0x760d38b906034f114B46254d2516cD3995a2680f',
-    wrapGNBUTest: '0x988Ff123073eA1374Ec999Eabd5F9Bb4Ba3c5399'
-  }
+  // врап контракты
+  const WrapEthAddress = token.value === 'NBU' ? contractsAddressesETH.wrapNBUTest : contractsAddressesETH.wrapGNBUTest
+  const WrapBscAddress = token.value === 'NBU' ? contractsAddressesBSC.wrapNBUTest : contractsAddressesBSC.wrapGNBUTest
 
-  const WrapEthAddress = token.value === 'NBU' ? '0x760d38b906034f114B46254d2516cD3995a2680f' : '0x988Ff123073eA1374Ec999Eabd5F9Bb4Ba3c5399'
-  // const WrapBscAddress = token.value === 'NBU' ? wrapContract.wrapNBUb : wrapContract.wrapGNBUb
-  const WrapBscAddress = token.value === 'NBU' ? 'xD25969cf1c1930e4EB5b13007B09A5CFd02c16c8' : '0xEe9628E882ee2929DF2de2c8Ca06b70aC9c211Aa'
-
-  // const ethContract = new web3.eth.Contract(ABI, '0xe4931a2255540F05b0C6dB8B5e9759eF2B579994')
-  // const bscContract = new web3.eth.Contract(ABI_BEP20, '0xac094071B2e1C248BbE1Df9FE7b05ea94c305403')
+  // контракт на котором вызывается метод врап
   const ethContract = token.value === 'NBU'
-    ? new web3.eth.Contract(wrapAbi, '0x760d38b906034f114B46254d2516cD3995a2680f')
-    : new web3.eth.Contract(wrapAbi, '0x988Ff123073eA1374Ec999Eabd5F9Bb4Ba3c5399')
+    ? new web3.eth.Contract(wrapAbi, contractsAddressesETH.wrapNBUTest)
+    : new web3.eth.Contract(wrapAbi, contractsAddressesETH.wrapGNBUTest)
   const bscContract = token.value === 'NBU'
-    ? new web3.eth.Contract(wrapAbiBSC, '0xD25969cf1c1930e4EB5b13007B09A5CFd02c16c8')
-    : new web3.eth.Contract(wrapAbiBSC, '0xEe9628E882ee2929DF2de2c8Ca06b70aC9c211Aa')
+    ? new web3.eth.Contract(wrapAbiBSC, contractsAddressesBSC.wrapNBUTest)
+    : new web3.eth.Contract(wrapAbiBSC, contractsAddressesBSC.wrapGNBUTest)
 
-  const NBUContractBSC = new web3.eth.Contract(ABI, '0x5f20559235479F5B6abb40dFC6f55185b74E7b55')
-  const NBUContractETH = new web3.eth.Contract(ABI, '0xEB58343b36C7528F23CAAe63a150240241310049')
+  // контракты для аллованса
+  const NBUContractBSC = new web3.eth.Contract(ABI, contractsAddressesBSC.nbu)
+  const NBUContractETH = new web3.eth.Contract(ABI, contractsAddressesETH.nbu)
 
-  const { getBalance } = useBalanceOf('0xEB58343b36C7528F23CAAe63a150240241310049')
+  const { getBalance } = useBalanceOf(isETH ? contractsAddressesETH.nbu : contractsAddressesBSC.nbu)
 
 
   const getNBU = async () => {
@@ -196,10 +170,10 @@ const Wrap = () => {
         !allow && (await approve(NBUContractBSC, WrapBscAddress))
         await unwrapBSC()
       } else {
-        const allow = await allowance(NBUContractETH, '0xe4931a2255540F05b0C6dB8B5e9759eF2B579994')
-        // const allow = await allowance(NBUContractETH, WrapEthAddress)
-        !allow && (await approve(NBUContractETH, '0xe4931a2255540F05b0C6dB8B5e9759eF2B579994'))
-        // !allow && (await approve(NBUContractETH, WrapEthAddress))
+        // const allow = await allowance(NBUContractETH, '0xe4931a2255540F05b0C6dB8B5e9759eF2B579994')
+        const allow = await allowance(NBUContractETH, WrapEthAddress)
+        // !allow && (await approve(NBUContractETH, '0xe4931a2255540F05b0C6dB8B5e9759eF2B579994'))
+        !allow && (await approve(NBUContractETH, WrapEthAddress))
         await wrapETH()
       }
       await getNBU()
