@@ -15,3 +15,16 @@ export const contractsAddressesETH = {
   wrapNBUTest: '0x760d38b906034f114B46254d2516cD3995a2680f',
   wrapGNBUTest: '0x988Ff123073eA1374Ec999Eabd5F9Bb4Ba3c5399'
 }
+
+export const tokenList = [
+  {
+    label: 'NBU',
+    value: 'NBU'
+  },
+  {
+    label: 'GNBU',
+    value: 'GNBU'
+  }
+]
+
+export const MAX_VALUE = '115792089237316195423570985008687907853269984665640564039457584007913129639935'

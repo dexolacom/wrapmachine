@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-// import ABI from './ABI_DEFAULT.json'
 import {useWeb3React} from '@web3-react/core';
 import Web3 from 'web3';
 import ABI from './abis/abi.json'
@@ -22,29 +21,6 @@ export const normalizeEth = str => {
   const dot = wei.indexOf('.')
   if (dot < 0) return str
   return wei.slice(0, dot + 5)
-}
-
-export const getWrapContract = chainId => {
-  // 0xBFe52A0DBF40183bc5fC3220Dab2Db64BF19368E NBU Wrapper Binance
-  // 0xCaD011b3B79a3a83C576E6b2682049e296bE9374 GNBU Wrapper Binance
-  // 0xBFe52A0DBF40183bc5fC3220Dab2Db64BF19368E NBU Wrapper Ethereum
-  // 0xCaD011b3B79a3a83C576E6b2682049e296bE9374 GNBU Wrapper Ethereum
-
-  //Prod
-  if (chainId === 1 || chainId === 56) {
-    return {
-      wrapNBU: '0xBFe52A0DBF40183bc5fC3220Dab2Db64BF19368E',
-      wrapNBUb: '0xBFe52A0DBF40183bc5fC3220Dab2Db64BF19368E',
-      wrapGNBU: '0xCaD011b3B79a3a83C576E6b2682049e296bE9374',
-      wrapGNBUb: '0xCaD011b3B79a3a83C576E6b2682049e296bE9374'
-    }
-  }
-  return {
-    wrapNBUb: '0xD25969cf1c1930e4EB5b13007B09A5CFd02c16c8',
-    wrapGNBUb: '0xEe9628E882ee2929DF2de2c8Ca06b70aC9c211Aa',
-    wrapNBU: '0x760d38b906034f114B46254d2516cD3995a2680f',
-    wrapGNBU: '0x988Ff123073eA1374Ec999Eabd5F9Bb4Ba3c5399'
-  }
 }
 
 export const convertToHuman = (value, decimals)  => {
