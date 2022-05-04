@@ -1,28 +1,14 @@
 //@ts-nocheck
 import React, { useEffect, useState } from 'react'
-import {wrap} from '../../constants/contractMethods';
 import { useWeb3React } from '@web3-react/core'
-import Select from 'react-select'
-import {shortenAddress, useBalanceOf} from '../../constants/utils'
-import {
-  Wrapper,
-  Content,
-  Title,
-  InputContainer,
-  Row,
-  selectScrollStyles,
-  InputWrapper,
-  Text,
-  Button,
-  AccentText
-} from './styles'
-import { normalizeEth } from '../../constants/utils'
-import ABI from '../../constants/abis/erc20_abi.json'
-import wrapAbi from '../../constants/abis/wrapAbi.json'
-import wrapAbiBSC from '../../constants/abis/wrapAbiBSC.json'
-import {contractsAddressesBSC, contractsAddressesETH, tokenList} from '../../constants/addresses';
 import Web3 from 'web3';
-import Loader from '../Loader/Loader';
+import Select from 'react-select'
+import {wrap} from '../../constants/contractMethods'
+import {shortenAddress, useBalanceOf} from '../../constants/utils'
+import { normalizeEth } from '../../constants/utils'
+import {contractsAddressesBSC, contractsAddressesETH, tokenList} from '../../constants/addresses';
+import Loader from '../Loader/Loader'
+import {Wrapper, Content, Title, InputContainer, Row, selectScrollStyles, InputWrapper, Text, Button, AccentText} from './styles'
 
 const Wrap = () => {
   const { account, chainId } = useWeb3React()
@@ -35,29 +21,12 @@ const Wrap = () => {
   // const [minAmount, setMinAmount] = useState(0)
 
   const web3 = new Web3(Web3.givenProvider || process.env.REACT_APP_NETWORK_URL)
-  // const BN = web3.utils.BN
   // const event = isETH ? 'Wrap' : 'Unwrap'
   const isETH = chainId === 1 || chainId === 3
 
-  const changeToken = value => {
+  const selectToken = value => {
     setToken(value)
   }
-
-  // адрес врап контракта
-  const ethWrapContractAddress = token.value === 'NBU' ? contractsAddressesETH.wrapNBUTest : contractsAddressesETH.wrapGNBUTest
-  const bscWrapContractAddress = token.value === 'NBU' ? contractsAddressesBSC.wrapNBUTest : contractsAddressesBSC.wrapGNBUTest
-
-  // контракт на котором вызывается метод врап
-  const ethWrapContract = token.value === 'NBU'
-    ? new web3.eth.Contract(wrapAbi, contractsAddressesETH.wrapNBUTest)
-    : new web3.eth.Contract(wrapAbi, contractsAddressesETH.wrapGNBUTest)
-  const bscWrapContract = token.value === 'NBU'
-    ? new web3.eth.Contract(wrapAbiBSC, contractsAddressesBSC.wrapNBUTest)
-    : new web3.eth.Contract(wrapAbiBSC, contractsAddressesBSC.wrapGNBUTest)
-
-  // контракты для аллованса
-  const bscContractNBU = new web3.eth.Contract(ABI, contractsAddressesBSC.nbu)
-  const ethContractNBU = new web3.eth.Contract(ABI, contractsAddressesETH.nbu)
 
   const { getBalance } = useBalanceOf(isETH ? contractsAddressesETH.nbu : contractsAddressesBSC.nbu)
 
@@ -101,7 +70,7 @@ const Wrap = () => {
   // useEffect(() => {
   //   let result = web3.utils.fromWei(new BN(web3.utils.toWei(fee, 'ether')).mul(new BN(2)), 'ether')
   //   setMinAmount(result)
-  // }, [fee])
+  // }, [fee])j
 
   // useEffect(() => {
   //   const delayDebounceFn = setTimeout(() => {
@@ -142,7 +111,7 @@ const Wrap = () => {
               options={tokenList}
               styles={selectScrollStyles}
               value={token}
-              onChange={changeToken}
+              onChange={selectToken}
               isSearchable={false}
             />
           </InputContainer>
@@ -171,12 +140,6 @@ const Wrap = () => {
               setIsLoading,
               getNBU,
               wrapNBU,
-              ethWrapContractAddress,
-              bscWrapContractAddress,
-              ethWrapContract,
-              bscWrapContract,
-              bscContractNBU,
-              ethContractNBU
             )}>Wrap</Button>
           }
         </Row>
